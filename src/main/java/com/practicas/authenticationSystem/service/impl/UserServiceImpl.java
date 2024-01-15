@@ -2,11 +2,13 @@ package com.practicas.authenticationSystem.service.impl;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.practicas.authenticationSystem.dto.LoginRequest;
 import com.practicas.authenticationSystem.dto.Request;
 import com.practicas.authenticationSystem.dto.Response;
+import com.practicas.authenticationSystem.dto.UserInfo;
 import com.practicas.authenticationSystem.entity.User;
 import com.practicas.authenticationSystem.repository.UserRepository;
 import com.practicas.authenticationSystem.service.UserService;
@@ -19,6 +21,7 @@ public class UserServiceImpl implements UserService {
  
 	private UserRepository userRepo;
 	private ModelMapper modelMaper;
+	private PasswordEncoder passwordEncoder;
 	@Override
 	public ResponseEntity<Response> signup(Request request) {
 		// if the user exists - return error
@@ -32,7 +35,7 @@ public class UserServiceImpl implements UserService {
 				}
 		User user = User.builder()
 				.email(request.getEmail())
-				.password(request.getPassword())
+				.password(passwordEncoder.encode(request.getPassword()))
 				.firstName(request.getFirstName())
 				.lastName(request.getLastName())
 				.build();
@@ -41,7 +44,7 @@ public class UserServiceImpl implements UserService {
 		return ResponseEntity.ok(Response.builder()
 				.statusCode(200)
 				.responseMessage("Success")
-				.userInfo(modelMaper.map(savedUser, Request.class))
+				.userInfo(modelMaper.map(savedUser, UserInfo.class))
 				.build());
 	}
 

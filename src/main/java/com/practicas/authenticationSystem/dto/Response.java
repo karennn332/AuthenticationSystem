@@ -15,7 +15,7 @@ public class Response {
 	
 	private int statusCode;
 	private String responseMessage;
-	private Request userInfo;
+	private UserInfo userInfo;
 	
 	
 	}
