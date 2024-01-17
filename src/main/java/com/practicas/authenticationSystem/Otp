@@ -1,0 +1,4 @@
+.Email configuration and email service 
+.Create method that generates a random four digit code
+.Entity class for otp,Create method to send the otp.
+.A method to validate the otp(checking the correctness of code, time elapsement).

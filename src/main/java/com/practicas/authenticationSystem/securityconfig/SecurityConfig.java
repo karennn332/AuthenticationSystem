@@ -1,7 +1,7 @@
 package com.practicas.authenticationSystem.securityconfig;
 
 
-import javax.security.sasl.AuthorizeCallback;
+
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,7 +20,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 	
 	@Bean
-	public PasswordEncoder passwordEncoder(){
+	 PasswordEncoder passwordEncoder(){
 		return new BCryptPasswordEncoder();
 	}
 	@Bean
@@ -28,7 +28,12 @@ public class SecurityConfig {
 		httpSecurity.csrf(AbstractHttpConfigurer::disable)
 		.authorizeHttpRequests(authorize -> 
 		authorize.requestMatchers(HttpMethod.POST, "api/v1/auth/signUp")
-				.permitAll().anyRequest().authenticated());
+				.permitAll()
+				.requestMatchers(HttpMethod.POST,"api/v1/otp/sendOtp").permitAll()
+				.requestMatchers(HttpMethod.POST,"api/v1/otp/validateOtp").permitAll()
+				.anyRequest().authenticated()
+				
+				);
 		
 		return httpSecurity.build();
 	}
