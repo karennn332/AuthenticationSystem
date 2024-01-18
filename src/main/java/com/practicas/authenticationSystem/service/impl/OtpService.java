@@ -81,7 +81,7 @@ public class OtpService {
 					.responseMessage("Expired Otp")
 					.build();
 		}
-		if(otp.getOtp().equals(otpValidationRequest.getOtp())) {
+		if(!otp.getOtp().equals(otpValidationRequest.getOtp())) {
 			return Response.builder()
 					.statusCode(400)
 					.responseMessage("Invalid Otp")
